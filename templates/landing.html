@@ -1,0 +1,31 @@
+<!doctype html>
+<title>Daniel Logan's Milestone Project</title>
+<link rel=stylesheet type=text/css href='{{ url_for('static',filename='style_lulu.css')}}'>
+<div class=page>
+    <h1>Stock Price Lookup</h1>
+    <div class=metanav>
+    
+        <h4>
+            You will be asked to input a stock symbol in the input box below.
+            After checking one or more boxes and hitting the submit button, you
+            will see your requested plot below for the past month's worth of data.
+        </h4>
+        <h4>
+            <form id='stock_sym_lookup' method='post' action='/' >
+                <p>
+                    Stock symbol: <input type='text' name='stock_sym' />
+                </p>
+                <p>
+                    Plot: <br />
+                    <input type='checkbox' name='option1' value=1 /> Closing price <br />
+                    <input type='checkbox' name='option2' value=1 /> Opening price <br />
+                    <input type='checkbox' name='option3' value=1 /> Trading day high price <br />
+                    <input type='checkbox' name='option4' value=1 /> Trading day low price <br />
+                </p>
+                <p>
+                    <input type='submit' value='Submit' />
+                </p>
+            </form>
+         </h4>
+     </div>
+</div>
