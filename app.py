@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import pandas
 import Quandl
 import csv
