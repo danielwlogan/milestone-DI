@@ -10,9 +10,9 @@ from datetime import datetime
 from bokeh.plotting import figure
 from bokeh.embed import file_html, components
 
-app_ms = Flask(__name__)
+app = Flask(__name__)
 
-app_ms.vars={}
+app.vars={}
 database = 'WIKI'
 
 # Create function to handle month change
@@ -35,8 +35,8 @@ def get_quandl(symbol):
             if test_code == line[0]: return [line[0], line[1]]
     return ['NA']
 
-#@app_ms.route('/index_ms', methods=['GET','POST'])
-@app_ms.route('/', methods=['GET','POST'])
+#@app.route('/index_ms', methods=['GET','POST'])
+@app.route('/', methods=['GET','POST'])
 def index():
     # The 'GET' is called the first time.
     if request.method == 'GET':
@@ -44,26 +44,26 @@ def index():
     else:
         # Here is where I put stuff when the user submits things in the fields
         # Clear the check boxes everytime I hit submit
-        app_ms.vars['close_px'] = 0
-        app_ms.vars['open_px'] = 0
-        app_ms.vars['high_px'] = 0
-        app_ms.vars['low_px'] = 0
+        app.vars['close_px'] = 0
+        app.vars['open_px'] = 0
+        app.vars['high_px'] = 0
+        app.vars['low_px'] = 0
             
-        # Move variables into the app_ms.vars dictionary
-        app_ms.vars['symbol'] = request.form['stock_sym']
+        # Move variables into the app.vars dictionary
+        app.vars['symbol'] = request.form['stock_sym']
         
         # Do a simple error checking to see if stock symbol exists
-        quandl_code = get_quandl(app_ms.vars['symbol'])
-        if quandl_code == ['NA']: return render_template('error.html', sym=app_ms.vars['symbol'])
+        quandl_code = get_quandl(app.vars['symbol'])
+        if quandl_code == ['NA']: return render_template('error.html', sym=app.vars['symbol'])
         
         if 'option1' in request.form:
-            app_ms.vars['close_px'] = request.form['option1']
+            app.vars['close_px'] = request.form['option1']
         if 'option2' in request.form:
-            app_ms.vars['open_px'] = request.form['option2']
+            app.vars['open_px'] = request.form['option2']
         if 'option3' in request.form:
-            app_ms.vars['high_px'] = request.form['option3']
+            app.vars['high_px'] = request.form['option3']
         if 'option4' in request.form:
-            app_ms.vars['low_px'] = request.form['option4']
+            app.vars['low_px'] = request.form['option4']
             
         # Get the current date and the date one month ago
         # Put those dates in the Quandl format
@@ -81,7 +81,7 @@ def index():
         
         # Generate Bokeh HTML elements
         # Create a 'figure' object that will hold everything
-        p = figure(title='Stock prices for {}, {}'.format(app_ms.vars['symbol'],\
+        p = figure(title='Stock prices for {}, {}'.format(app.vars['symbol'],\
             quandl_code[1]), plot_width=500, plot_height=500, x_axis_type='datetime')
         # x axis will always be the same
         x = mydata.index
@@ -113,4 +113,4 @@ def index():
         return render_template('figure.html',figJS=figJS, figDiv=figDiv)
 
 if __name__ == "__main__":
-  app_ms.run()
+  app.run()
